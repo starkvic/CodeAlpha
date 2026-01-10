@@ -1,3 +1,4 @@
+import os
 stocks_list = {
     "AAPL": 260.33,   # Apple
     "MSFT": 483.47,   # Microsoft
@@ -31,16 +32,36 @@ with open(file_path,'r') as data:
     print(line)
 """
 print("Welcome to the text based Stock Market Exchange TBSME")
-print(f"There stocks present are{len(stocks_list)}")
+print(f"There stocks present are {len(stocks_list)}")
 stock_row = []
 price_row = []
 for stock,price in stocks_list.items():
     #print(f"The {stock} is valued at {price}") ##For testing the display of the stocks
     stock_row.append(str(stock))
     price_row.append(price)
-print(stock_row)
-print(price_row)
+
+for i in range(0,len(stocks_list),4):
+    print(stock_row[i],":",price_row[i],"    ",stock_row[i+1],":",price_row[i+1],"    ",stock_row[i+2],":",price_row[i+2],"    ",stock_row[i+3],":",price_row[i+3])
 trading_choice = True
 while trading_choice==True:
-    print("try")
+    user_select = input("First time user?Y/N - ")
+    current_user = ""
+    if(user_select.lower()=="y"):
+        new_user = input("Kindly Enter your first name")
+        current_user = new_user
+    else:
+        files = os.listdir(".")
+        extension =".txts"
+        users = [file for file in files if extension in file]
+        print("Welcome back. Kindly select your account from the list of the below:")
+        for user in users:
+            print(user[0:-5])
+        current_user = input("My name is - ")
+    #_=os.system("cls") #can be used to clear the screen if it is too cluttered.
+    current_file = open(f"{current_user}.txt","w+")
+    if(user_select=="n"):
+        
+        print("Here are the list of your stocks")
+        
+            
     break
