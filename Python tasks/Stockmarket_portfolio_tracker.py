@@ -21,7 +21,7 @@ stocks_list = {
     "PEP": 170.20,    # PepsiCo
     "NKE": 104.75     # Nike
 }
-print(type(stocks_list))
+#print(type(stocks_list)) Displays the type of container storing the stocks
 """
 file_path = "stocks.txt" #This is the storage of the file that is used to store the list of stocks
 with open(file_path,'r') as data:
@@ -58,10 +58,19 @@ while trading_choice==True:
             print(user[0:-5])
         current_user = input("My name is - ")
     #_=os.system("cls") #can be used to clear the screen if it is too cluttered.
-    current_file = open(f"{current_user}.txt","w+")
     if(user_select=="n"):
-        
         print("Here are the list of your stocks")
+        current_file = open(f"{current_user}.txts","a+")
+        current_stocks = current_file.readlines()
+        #defining the stocks and list
+        print(current_stocks)
+        """
+        name_stock = current_stocks[0].split(",")
+        qty_stock = current_stocks[1].split(",") 
+        for i in range(len(name_stock)):
+            print(f"{name_stock[i]}:    {qty_stock[i]}") """
+    else:
+        current_file = open(f"{current_user}.txts","a+")
         
-            
+    
     break
