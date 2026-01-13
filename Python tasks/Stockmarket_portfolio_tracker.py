@@ -51,19 +51,53 @@ while trading_choice==True:
         current_user = new_user
     else:
         files = os.listdir(".")
-        extension =".txts"
+        extension =".txt"
         users = [file for file in files if extension in file]
         print("Welcome back. Kindly select your account from the list of the below:")
         for user in users:
-            print(user[0:-5])
+            print(user[0:-4])
         current_user = input("My name is - ")
     #_=os.system("cls") #can be used to clear the screen if it is too cluttered.
     if(user_select=="n"):
         print("Here are the list of your stocks")
-        current_file = open(f"{current_user}.txts","a+")
-        current_stocks = current_file.readlines()
-        #defining the stocks and list
-        print(current_stocks)
+        with open(f"{current_user}.txt","r+") as current_file:
+            current_stocks = current_file.readlines()
+            #print(current_file) to display the selected file and mode
+        
+        #displaying current stocks
+        #print(current_stocks) #shows the structure of the list holding the users stocks
+        mystock_row = current_stocks[0].split(",")
+        myqty_row = current_stocks[1].split(",")
+        #removing trailing new line marker
+        mystock_row[len(mystock_row)-1] = mystock_row[len(mystock_row)-1][0:-1]
+        myqty_row[len(myqty_row)-1] = myqty_row[len(myqty_row)-1][0:-1]
+        total_investment = 0
+        for i in range(len(mystock_row)):
+            print(f"{i+1}.{mystock_row[i]}:{myqty_row[i]}")
+            total_investment += int(stocks_list[mystock_row[i]])*int(myqty_row[i])
+        print(f"Your total investment is {total_investment}$")
+        new_stock = input("Add a new stock? Y/N")
+        while new_stock.lower()=="y":
+            stock_name = input("Stock name:")
+            stock_qty = input("Quantity:")
+            mystock_row.append(stock_name)
+            myqty_row.append(stock_qty)
+            new_stock = input("Add a new stock? Y/N")
+        print("Thank you for trading...\nYour current balance is")
+        for i in range(len(mystock_row)):
+            print(f"{i+1}.{mystock_row[i]}:{myqty_row[i]}")
+            total_investment += int(stocks_list[mystock_row[i]])*int(myqty_row[i])
+        print(f"Your total investment is {total_investment}$")
+        mystock_row[len(mystock_row)-1] = str(mystock_row[len(mystock_row)-1])+"\n"
+        myqty_row[len(myqty_row)-1] = str(myqty_row[len(myqty_row)-1])+"\n"
+        #print(mystock_row) #Printing the output string
+        #print(myqty_row) #Printing the output string
+        with open(f"{current_user}.txt","w") as current_file:    
+            current_file.write(",".join(mystock_row))
+            current_file.write(",".join(myqty_row))
+
+
+
         """
         name_stock = current_stocks[0].split(",")
         qty_stock = current_stocks[1].split(",") 
