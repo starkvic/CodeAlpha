@@ -65,7 +65,7 @@ while trading_choice==True:
             #print(current_file) to display the selected file and mode
         
         #displaying current stocks
-        #print(current_stocks) #shows the structure of the list holding the users stocks
+        print(current_stocks) #shows the structure of the list holding the users stocks
         mystock_row = current_stocks[0].split(",")
         myqty_row = current_stocks[1].split(",")
         #removing trailing new line marker
@@ -104,7 +104,31 @@ while trading_choice==True:
         for i in range(len(name_stock)):
             print(f"{name_stock[i]}:    {qty_stock[i]}") """
     else:
-        current_file = open(f"{current_user}.txts","a+")
+        current_file = open(f"{current_user}.txt","a+")
+        current_stocks = current_file.readlines()
+        mystock_row = []
+        myqty_row = []
+        total_investment = 0
+        new_stock = input("Add a new stock? Y/N")
+        while new_stock.lower()=="y":
+            stock_name = input("Stock name:")
+            stock_qty = input("Quantity:")
+            mystock_row.append(stock_name)
+            myqty_row.append(stock_qty)
+            new_stock = input("Add a new stock? Y/N")
+        print("Thank you for trading...\nYour current balance is")
+        for i in range(len(mystock_row)):
+            print(f"{i+1}.{mystock_row[i]}:{myqty_row[i]}")
+            total_investment += int(stocks_list[mystock_row[i]])*int(myqty_row[i])
+        print(f"Your total investment is {total_investment}$")
+        mystock_row[len(mystock_row)-1] = str(mystock_row[len(mystock_row)-1])+"\n"
+        myqty_row[len(myqty_row)-1] = str(myqty_row[len(myqty_row)-1])+"\n"
+        #print(mystock_row) #Printing the output string
+        #print(myqty_row) #Printing the output string
+        with open(f"{current_user}.txt","w") as current_file:    
+            current_file.write(",".join(mystock_row))
+            current_file.write(",".join(myqty_row))
+
         
     
     break
